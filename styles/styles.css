@@ -33,7 +33,6 @@ header{
 
 main{
     margin-bottom: 90px;
-    height: 100vh;
 }
 
 /* NavBar Superior */
@@ -269,6 +268,53 @@ main{
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     margin-left: 50px;
+}
+
+.hogar__contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+}
+
+.main__contenedor-ingresos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 90px;
+}
+
+.main__contenedor-hombre {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 90px;
+}
+
+.main__contenedor-mujer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 90px;
+}
+
+.main__contenedor-infancia {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 90px;
+}
+
+.main__contenedor-hogar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 90px;
 }
 
 /* Carrito de compras */

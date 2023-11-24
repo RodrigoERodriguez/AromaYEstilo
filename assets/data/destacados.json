@@ -39,16 +39,6 @@
                 "id":"hogar"
             },
             "precio": 1000
-        },
-        {
-            "id":"hogar-04",
-            "titulo":"MANZANA CANELA",
-            "imagen":"../assets/images/hogar/MANZANA-CANELA.webp",
-            "categoria":{
-                "nombre":"Hogar",
-                "id":"hogar"
-            },
-            "precio": 1000
         }
     ],
     "hombre": [
