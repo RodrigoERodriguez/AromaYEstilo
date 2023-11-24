@@ -9,7 +9,7 @@ const carritoVacio = document.querySelector("#carrito__carrito-vacio");
 const carritoProductos = document.querySelector("#carrito__carrito-productos");
 const carritoAcciones = document.querySelector("#carrito__carrito-acciones");
 const carritoComprado = document.querySelector("#carrito__carrito-comprado");
-let eliminar =document.querySelectorAll(".carrito__carrito-producto-eliminar");
+let eliminar = document.querySelectorAll(".carrito__carrito-producto-eliminar");
 const vaciar = document.querySelector("#carrito__carrito-acciones-vaciar");
 const contenedorTotal = document.querySelector("#carrito__total");
 const comprar = document.querySelector("#carrito__carrito-acciones-comprar");
@@ -17,7 +17,7 @@ const comprar = document.querySelector("#carrito__carrito-acciones-comprar");
 //---------------------------------------------------------------//
 
 function cargarProductosCarrito() {
-    if (productosEnCarrito && productosEnCarrito.length > -1) {
+    if (productosEnCarrito && productosEnCarrito.length > 0) {
 
         carritoVacio.classList.add("disabled");
         carritoProductos.classList.remove("disabled");
@@ -53,22 +53,25 @@ function cargarProductosCarrito() {
     
             carritoProductos.append(div);
         });
+
+        actualizarBotonEliminar();
+        actualizarTotal();
     
     } else {
     
         carritoVacio.classList.remove("disabled");
-        carritoProductos.classList.add("disabled");
-        carritoAcciones.classList.add("disabled");
-        carritoComprado.classList.add("disabled");
-    
-    }
 
-    actualizarBotonEliminar();
-    actualizarTotal();
+        carritoProductos.classList.add("disabled");
+        carritoProductos.classList.remove("carrito__carrito-productos");
+
+        carritoAcciones.classList.remove("carrito__carrito-acciones");
+        carritoAcciones.classList.add("disabled");
+
+        carritoComprado.classList.add("disabled");
+    }
 }
 
 cargarProductosCarrito();
-actualizarBotonEliminar();
 
 //---------------------------------------------------------------//
 
@@ -101,9 +104,10 @@ function eliminarDelCarrito(e){
             onClick: function(){} // Callback after click
     }).showToast();
 
-    const idBoton= e.currentTarget.id;
+    const idBoton = e.currentTarget.id;
 
     const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
+
     productosEnCarrito.splice(index, 1);
     cargarProductosCarrito();
     
@@ -125,10 +129,9 @@ function vaciarCarrito() {
         cancelButtonText: `No`,
     }).then((result) => {
         if (result.isConfirmed) {
-            
+
             productosEnCarrito.length = 0;
             localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-
             cargarProductosCarrito();
         }
     });
@@ -143,10 +146,8 @@ function actualizarTotal(){
 
 //---------------------------------------------------------------//
 
-comprar.addEventListener("click", comprarCarrito);
-async function comprarCarrito() {
-
-    const resultado = await Swal.fire({
+comprar.addEventListener("click", async () => {
+    const confirmacionCompra = await Swal.fire({
         title: '¿Estás seguro?',
         icon: 'question',
         html: `Usted va a comprar ${productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0)} productos.`,
@@ -156,13 +157,57 @@ async function comprarCarrito() {
         cancelButtonText: 'Cancelar'
     });
 
-    if (resultado.isConfirmed) {
-        productosEnCarrito.length = 0;
-        localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-    
-        carritoVacio.classList.add("disabled");
-        carritoProductos.classList.add("disabled");
-        carritoAcciones.classList.add("disabled");
-        carritoComprado.classList.remove("disabled");
+    if (confirmacionCompra.isConfirmed) {
+        const { value: formValues } = await Swal.fire({
+            title: 'Información de Compra',
+            html:
+                '<input type="radio" name="metodoPago" value="tarjeta"> Tarjeta de Crédito/Débito<br>' +
+                '<input type="radio" name="metodoPago" value="paypal"> PayPal<br>' +
+                '<input type="radio" name="metodoPago" value="transferencia"> Transferencia Bancaria<br>' +
+                '<input id="swal-input2" class="swal2-input" placeholder="Nombre">' +
+                '<input id="swal-input3" class="swal2-input" placeholder="Apellido">' +
+                '<input id="swal-input4" class="swal2-input" placeholder="Correo Electrónico">' +
+                '<input id="swal-input5" class="swal2-input" placeholder="Número de Teléfono">',
+            focusConfirm: false,
+            preConfirm: () => {
+                return [
+                    document.querySelector('input[name="metodoPago"]:checked').value,
+                    document.getElementById('swal-input2').value,
+                    document.getElementById('swal-input3').value,
+                    document.getElementById('swal-input4').value,
+                    document.getElementById('swal-input5').value
+                ];
+            }
+        });
+
+        if (formValues) {
+            const [metodoPago, nombre, apellido, email, telefono] = formValues;
+
+            const informacionCompra = {
+                metodoPago,
+                nombre,
+                apellido,
+                email,
+                telefono
+            };
+
+            localStorage.setItem("informacion-compra", JSON.stringify(informacionCompra));
+
+            Swal.fire({
+                title: 'Compra realizada con éxito',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+
+            productosEnCarrito.length = 0;
+            localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+
+            carritoVacio.classList.remove("disabled");
+            carritoProductos.classList.add("disabled");
+            carritoProductos.classList.remove("carrito__carrito-productos");
+            carritoAcciones.classList.remove("carrito__carrito-acciones");
+            carritoAcciones.classList.add("disabled");
+            carritoComprado.classList.add("disabled");
+        }
     }
-}
+});

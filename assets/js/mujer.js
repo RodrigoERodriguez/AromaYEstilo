@@ -4,7 +4,7 @@ let productosMujer = [];
 
 //---------------------------------------------------------------//
 
-fetch("../assets/js/mujer.json")
+fetch("../assets/data/mujer.json")
     .then(response => response.json())
     .then(data => {
         productosMujer = data;
@@ -102,7 +102,22 @@ if(productosEnListaDeDeseosLS){
 
 function agregarAlCarrito (e) {
 
+    Toastify({
+        text: "Producto agregado al Carrito",
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #4b33a8, #785ce9)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem",
+            },
 
+            onClick: function(){} // Callback after click
+    }).showToast();
 
     const idBoton = e.currentTarget.id;
     const productoAgregadoAlCarrito = productosMujer.find(producto => producto.id === idBoton);
@@ -131,7 +146,22 @@ function ActualizarCarrito() {
 
 function agregarListaDeDeseos(e) {
 
+    Toastify({
+        text: "Producto agregado a Favoritos",
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #4b33a8, #785ce9)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem",
+            },
 
+            onClick: function(){} // Callback after click
+    }).showToast();
 
     const idBoton = e.currentTarget.id;
     const productoAgregadoADeseos = productosMujer.find(producto => producto.id === idBoton);

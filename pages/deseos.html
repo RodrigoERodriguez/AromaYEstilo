@@ -54,7 +54,32 @@
     </header>
 
     <main>
+        <h2 class="deseos__titulo-principal">Lista de deseos</h2>
 
+            <div class="deseos__contenedor-deseos">
+
+                <p id="deseos__deseos-vacio" class="deseos__deseos-vacio">Tu lista de deseos esta vacia<i class="bi bi-emoji-frown"></i></p>
+
+                <div id="deseos__deseos-productos" class="deseos__deseos-productos">
+                    <!-- Esto se va a completar con el JS -->
+                </div>
+
+                <div id="deseos__deseos-acciones" class="deseos__deseos-acciones disabled">
+                    <div class="deseos__deseos-acciones-izquierda">
+                        <button id="deseos__deseos-acciones-vaciar" class="deseos__deseos-acciones-vaciar">Vaciar lista de deseos</button>
+                    </div>
+                    <div class="deseos__deseos-acciones-derecha">
+                        <div class="deseos__deseos-acciones-total">
+                            <p>Total:</p>
+                            <p id="deseos__total">$3000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wsp"><!--Boton de WhatsApp-->
+                <a href="https://walink.co/c25adf"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
     </main>
 
     <footer class="footer__footer"> <!-- Comienzo Footer -->
@@ -75,5 +100,9 @@
             <a href="#"><i class="fa-brands fa-square-youtube"></i></a>
         </div>
     </footer> 
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/deseos.js"></script>
 </body>
 </html>

@@ -4,17 +4,15 @@ let productosHogar = [];
 
 //---------------------------------------------------------------//
 
-fetch("../assets/js/hogar.json")
+fetch("../assets/data/hogar.json")
     .then(response => response.json())
     .then(data => {
         productosHogar = data;
         cargarProductos(productosHogar);
     })
-
 //- ELEMENTOS DEL DOM -//
 
 const contenedorProductosHogar = document.querySelector("#hogar__contenedor-productos")
-
 let botonesAgregar = document.querySelectorAll(".categoria__producto-carrito")
 let botonesAgregarDeseos = document.querySelectorAll(".categoria__producto-deseo")
 const numeritoCarrito = document.querySelector("#numerito-carrito")
@@ -45,6 +43,7 @@ function cargarProductos(productosElegidos){
         `;
 
         contenedorProductosHogar.append(div);
+        console.log("Contenedor Ingresos:", div);
     })
 
     actualizarBotonAgregar();
@@ -102,7 +101,22 @@ if(productosEnListaDeDeseosLS){
 
 function agregarAlCarrito (e) {
 
+    Toastify({
+        text: "Producto agregado al Carrito",
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #4b33a8, #785ce9)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem",
+            },
 
+            onClick: function(){} // Callback after click
+    }).showToast();
 
     const idBoton = e.currentTarget.id;
     const productoAgregadoAlCarrito = productosHogar.find(producto => producto.id === idBoton);
@@ -131,7 +145,22 @@ function ActualizarCarrito() {
 
 function agregarListaDeDeseos(e) {
 
+    Toastify({
+        text: "Producto agregado a Favoritos",
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #4b33a8, #785ce9)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem",
+            },
 
+            onClick: function(){} // Callback after click
+    }).showToast();
 
     const idBoton = e.currentTarget.id;
     const productoAgregadoADeseos = productosHogar.find(producto => producto.id === idBoton);
